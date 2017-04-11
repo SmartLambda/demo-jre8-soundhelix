@@ -7,7 +7,7 @@ import java.util.Map;
 public class Parameters implements LambdaParameter {
     private String arrangement = "percussion";
     private int ticksPerBeat = 12;
-    private int maxVelocity = 1000;
+    private int maxVelocity = 32768;
     private int bpm = 124;
     private Map<String, Integer> midiChannels;
     private Map<String, Integer> midiPrograms;
