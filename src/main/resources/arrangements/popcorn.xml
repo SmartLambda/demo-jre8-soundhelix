@@ -356,14 +356,4 @@
 </track>
 
 </arrangementEngine>
-    <map>
-        <map instrument="percussion" device="device1" channel="10" />
-        <map instrument="melody" device="device1" channel="1" program="1" />
-        <map instrument="chords" device="device1" channel="2" program="1" />
-        <map instrument="accomp" device="device1" channel="3" program="1" />
-        <map instrument="bass" device="device1" channel="4" program="36"/>
-        <map instrument="string" device="device1" channel="5" program="41"/>
-        <map instrument="pad" device="device1" channel="8" program="83"/>
-        <map instrument="arpeggio" device="device1" channel="9" program="9"/>
-    </map>
 </arrangement>

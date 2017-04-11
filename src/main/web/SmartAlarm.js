@@ -19,6 +19,44 @@ $(function () {
         });
     });
 
+    $('#preset').change(function() {
+        var $instrumentsTableBody = $('#instruments-table').find("tbody");
+        $instrumentsTableBody.html("");
+
+        var addInstrument = function(name, channel, program) {
+            $instrumentsTableBody.append("<tr>" +
+                "<td>" + name + "</td>" +
+                "<td><input class='form-control' type='number' value='" + channel + "' name='channel[" + name + "]'></td>" +
+                "<td><input class='form-control' type='number' value='" + program + "' name='program[" + name + "]'></td>" +
+                "</tr>");
+        };
+
+        switch($(this).find(":selected").val()) {
+            case "piano":
+                addInstrument("arpeggio", 1, 1);
+                addInstrument("accomp", 2, 1);
+                addInstrument("melody", 3, 2);
+                addInstrument("pad", 4, 92);
+                addInstrument("bass", 5, 40);
+                addInstrument("randombass", 6, 40);
+                addInstrument("percussion", 10, "")
+                break;
+            case "percussion":
+                addInstrument("percussion", 10, "");
+                break;
+            case "popcorn":
+                addInstrument("percussion", 10, "");
+                addInstrument("melody", 1, 1);
+                addInstrument("chords", 2, 1);
+                addInstrument("accomp", 3, 1);
+                addInstrument("bass", 4, 36);
+                addInstrument("string", 5, 41);
+                addInstrument("pad", 8, 83);
+                addInstrument("arpeggio", 9, 9);
+                break;
+        }
+    }).change();
+
     $('#try').click(function () {
         if (typeof player !== 'undefined' && player.pause()) {
             resetPlayState();
@@ -30,6 +68,21 @@ $(function () {
         self.removeClass("btn-success");
         self.addClass("btn-default");
         self.html("<i class='fa fa-spinner fa-spin'></i> Generating...");
+
+        var parameters = {
+            bpm: $('#bpm').val(),
+            maxVelocity: $('#maxVelocity').val(),
+            groove: $('#groove').val(),
+            ticksPerBeat: $('#ticksPerBeat').val(),
+            arrangement: $('#preset').find(":selected").val(),
+            midiChannels: {},
+            midiPrograms: {}
+        };
+
+        $('#instruments-table').find("tbody > tr").each(function() {
+            parameters.midiChannels[$(this).find("td:nth-child(1)").html()] = parseInt($(this).find("td:nth-child(2) > input").val());
+            parameters.midiPrograms[$(this).find("td:nth-child(1)").html()] = parseInt($(this).find("td:nth-child(3) > input").val());
+        });
 
         $.post({
             url: SMARTLAMBDA_ENDPOINT + "/" + LAMBDA_OWNER + "/lambda/" + LAMBDA_NAME,
@@ -57,13 +110,7 @@ $(function () {
                 });
             },
             data: JSON.stringify({
-                parameters: {
-                    bpm: $('#bpm').val(),
-                    maxVelocity: $('#maxVelocity').val(),
-                    groove: $('#groove').val(),
-                    ticksPerBeat: $('#ticksPerBeat').val(),
-                    arrangement: $('#preset').find(":selected").val()
-                }
+                parameters: parameters
             }),
             dataType: "json",
             headers: {

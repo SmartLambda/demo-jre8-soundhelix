@@ -2,11 +2,15 @@ package edu.teco.smartlambda.demo;
 
 import edu.teco.smartlambda.execution.LambdaParameter;
 
+import java.util.Map;
+
 public class Parameters implements LambdaParameter {
     private String arrangement = "percussion";
     private int ticksPerBeat = 12;
     private int maxVelocity = 1000;
     private int bpm = 124;
+    private Map<String, Integer> midiChannels;
+    private Map<String, Integer> midiPrograms;
 
     public int getTicksPerBeat() {
         return ticksPerBeat;
@@ -38,5 +42,21 @@ public class Parameters implements LambdaParameter {
 
     public void setBpm(int bpm) {
         this.bpm = bpm;
+    }
+
+    public Map<String, Integer> getMidiChannels() {
+        return midiChannels;
+    }
+
+    public void setMidiChannels(Map<String, Integer> midiChannels) {
+        this.midiChannels = midiChannels;
+    }
+
+    public Map<String, Integer> getMidiPrograms() {
+        return midiPrograms;
+    }
+
+    public void setMidiPrograms(Map<String, Integer> midiPrograms) {
+        this.midiPrograms = midiPrograms;
     }
 }

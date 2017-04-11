@@ -425,7 +425,4 @@
             <activityVector>cabasa</activityVector>
         </track>
     </arrangementEngine>
-    <map>
-        <map instrument="percussion" device="device1" channel="10" />
-    </map>
 </arrangement>

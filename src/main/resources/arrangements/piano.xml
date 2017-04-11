@@ -265,8 +265,7 @@
 
     <track>
         <transposition>-24</transposition>
-        <!--instrument>bass</instrument-->
-        <instrument>arpeggio</instrument>
+        <instrument>bass</instrument>
         <sequenceEngine class="PatternSequenceEngine">
             <patternEngine class="StringPatternEngine">
                 <string>0,-,-,-,0,-,-,0,-,-,0,-,-,-1,-,-,0,-,-,-,0,-,-,0,-,-,0,-,-,-,+,-,0,-,-,-,0,-,-,0,-,-,0,-,-,-1,-,-,0,-,-,-,0,-,-,0,-,0,-,-,0,-,+,-</string>
@@ -349,13 +348,4 @@
 <chordRandomTable>C,Am,G,F,Em,Dm,C,Am,G,F,Em,Dm,E</chordRandomTable>
 <chordRandomTable>C,F,G,F,C</chordRandomTable>
 </harmonyEngine>
-    <map>
-        <map instrument="arpeggio" device="device1" channel="1" program="1" />
-        <map instrument="accomp" device="device1" channel="2" program="1" />
-        <map instrument="melody" device="device1" channel="3" program="2" />
-        <map instrument="pad" device="device1" channel="4" program="92" />
-        <map instrument="bass" device="device1" channel="5" program="40" />
-        <map instrument="randombass" device="device1" channel="6" program="40" />
-        <map instrument="percussion" device="device1" channel="10" />
-    </map>
 </arrangement>

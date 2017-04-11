@@ -52,18 +52,21 @@ public class SoundHelixLambda {
         final Element arrangement = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(getClass()
                 .getResourceAsStream("/arrangements/" + parameters.getArrangement() + ".xml")).getDocumentElement();
 
+        parameters.getMidiChannels().forEach((name, channel) -> {
+            final Element map = document.createElement("map");
+            map.setAttribute("instrument", name);
+            map.setAttribute("device", "device1");
+            map.setAttribute("channel", String.valueOf(channel));
+
+            final Integer program = parameters.getMidiPrograms().get(name);
+            if(program != null && program != 0)
+                map.setAttribute("program", String.valueOf(program));
+
+            player.appendChild(map);
+        });
+
         for (int i = 0; i < arrangement.getChildNodes().getLength(); i++) {
             final Node item = arrangement.getChildNodes().item(i);
-
-            if (item instanceof Element && ((Element) item).getTagName().equals("map")) {
-                for (int j = 0; j < item.getChildNodes().getLength(); j++) {
-                    final Node imported = document.importNode(item.getChildNodes().item(j), true);
-                    player.appendChild(imported);
-                }
-
-                continue;
-            }
-
             final Node imported = document.importNode(item, true);
             root.appendChild(imported);
         }
@@ -119,13 +122,5 @@ public class SoundHelixLambda {
                 (outputStream));
 
         return outputStream;
-    }
-
-    private void addInstrument(final Document document, final Element player, final String name, final String channel) {
-        final Element map = document.createElement("map");
-        map.setAttribute("instrument", name);
-        map.setAttribute("channel", channel);
-        map.setAttribute("device", "device1");
-        player.appendChild(map);
     }
 }
