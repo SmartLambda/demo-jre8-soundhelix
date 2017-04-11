@@ -71,8 +71,7 @@
     </activityVector>
 
     <track>
-        <!--instrument>arpeggio</instrument-->
-        <instrument>bass</instrument>
+        <instrument>arpeggio</instrument>
         <transposition>-12</transposition>
         <sequenceEngine class="ArpeggioSequenceEngine">
             <normalizeChords>false</normalizeChords>
