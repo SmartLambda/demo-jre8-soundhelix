@@ -57,18 +57,7 @@ $(function () {
         }
     }).change();
 
-    $('#try').click(function () {
-        if (typeof player !== 'undefined' && player.pause()) {
-            resetPlayState();
-            return;
-        }
-
-        var self = $(this);
-
-        self.removeClass("btn-success");
-        self.addClass("btn-default");
-        self.html("<i class='fa fa-spinner fa-spin'></i> Generating...");
-
+    var buildParameters = function() {
         var parameters = {
             bpm: $('#bpm').val(),
             maxVelocity: $('#maxVelocity').val(),
@@ -84,12 +73,18 @@ $(function () {
             parameters.midiPrograms[$(this).find("td:nth-child(1)").html()] = parseInt($(this).find("td:nth-child(3) > input").val());
         });
 
+        return parameters;
+    };
+
+    var play = function(parameters) {
         $.post({
             url: SMARTLAMBDA_ENDPOINT + "/" + LAMBDA_OWNER + "/lambda/" + LAMBDA_NAME,
             success: function(result) {
                 var buf = new ArrayBuffer(result.midi.length);
                 var array = new Uint8Array(buf);
                 array.set(result.midi);
+
+                var $try = $('#try');
 
                 navigator.requestMIDIAccess().then(function(midi) {
                     var device = midi.outputs.get($('#midi-output').find(":selected").val());
@@ -104,9 +99,9 @@ $(function () {
                         resetPlayState();
                     });
 
-                    self.removeClass("btn-default");
-                    self.addClass("btn-danger");
-                    self.html("<span class='glyphicon glyphicon-stop'></span> Stop playback");
+                    $try.removeClass("btn-default");
+                    $try.addClass("btn-danger");
+                    $try.html("<span class='glyphicon glyphicon-stop'></span> Stop playback");
                 });
             },
             data: JSON.stringify({
@@ -118,5 +113,33 @@ $(function () {
             },
             contentType: "application/json"
         });
+    };
+
+    $('#try').click(function () {
+        if (typeof player !== 'undefined' && player.pause()) {
+            resetPlayState();
+            return;
+        }
+
+        var self = $(this);
+
+        self.removeClass("btn-success");
+        self.addClass("btn-default");
+        self.html("<i class='fa fa-spinner fa-spin'></i> Generating...");
+
+        play(buildParameters());
+    });
+
+    $('#set-alarm').click(function() {
+        var parameters = buildParameters();
+        var date = new Date();
+        date.setHours($('#hour').val());
+        date.setMinutes($('#minute').val());
+        date.setSeconds(0);
+
+        setTimeout(function() {
+            console.log("alarm!");
+            play(parameters);
+        }, date.getTime() - Date.now());
     });
 });

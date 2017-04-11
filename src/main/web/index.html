@@ -96,8 +96,19 @@
                     and
                     play</button>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 form-inline">
                 <h2>Set alarm</h2>
+                <div class="form-group">
+                    Play at
+                    <input type="number" min="0" max="23" id="hour" placeholder="13" class="form-control"
+                           style="max-width: 80px"> :
+                    <input type="number" min="0" max="59" id="minute" placeholder="37" class="form-control"
+                           style="max-width: 80px;">
+                </div>
+
+                <button type="button" class="btn btn-primary" id="set-alarm"><span
+                        class="glyphicon glyphicon-time"></span> Set alarm
+                </button>
             </div>
         </div>
     </div>
