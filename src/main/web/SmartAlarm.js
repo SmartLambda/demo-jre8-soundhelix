@@ -104,6 +104,13 @@ $(function () {
                     $try.html("<span class='glyphicon glyphicon-stop'></span> Stop playback");
                 });
             },
+            error: function() {
+                var $try = $('#try');
+                $try.removeClass("btn-default");
+                $try.addClass("btn-danger");
+                $try.html("<span class='glyphicon glyphicon-thumbs-down'></span> Something went wrong. Try again" +
+                    " with different settings");
+            },
             data: JSON.stringify({
                 parameters: parameters
             }),
@@ -124,6 +131,7 @@ $(function () {
         var self = $(this);
 
         self.removeClass("btn-success");
+        self.removeClass("btn-danger");
         self.addClass("btn-default");
         self.html("<i class='fa fa-spinner fa-spin'></i> Generating...");
 
