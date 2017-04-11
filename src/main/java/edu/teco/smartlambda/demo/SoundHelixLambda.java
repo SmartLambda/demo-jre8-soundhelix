@@ -72,16 +72,11 @@ public class SoundHelixLambda {
         root.appendChild(structure);
 
         final Element bars = document.createElement("bars");
+        bars.setTextContent("96");
         structure.appendChild(bars);
 
-        final Element barsRandom = document.createElement("random");
-        barsRandom.setAttribute("min", String.valueOf(parameters.getMinBars()));
-        barsRandom.setAttribute("max", String.valueOf(parameters.getMaxBars()));
-        barsRandom.setAttribute("step", String.valueOf(parameters.getBarsStep()));
-        bars.appendChild(barsRandom);
-
         final Element beatsPerBar = document.createElement("beatsPerBar");
-        beatsPerBar.setTextContent(String.valueOf(parameters.getBeatsPerBar()));
+        beatsPerBar.setTextContent("4");
         structure.appendChild(beatsPerBar);
 
         final Element ticksPerBeat = document.createElement("ticksPerBeat");
@@ -107,10 +102,6 @@ public class SoundHelixLambda {
         final Element afterPlayWaitTicks = document.createElement("afterPlayWaitTicks");
         afterPlayWaitTicks.setTextContent("0");
         player.appendChild(afterPlayWaitTicks);
-
-        final Element groove = document.createElement("groove");
-        groove.setTextContent(parameters.getGroove());
-        player.appendChild(groove);
 
         final Element midiFilename = document.createElement("midiFilename");
         midiFilename.setTextContent(OUTPUT_PATH);
